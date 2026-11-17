@@ -1,194 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MTN Uganda Data Bundle Comparison</title>
-    <style>
-      :root {
-        --primary: #ffcc00;
-        --primary-dark: #d29d00;
-        --bg: #f6f8fb;
-        --table-border: #bcbfc5;
-        --header-bg: #1d1d1d;
-        --header-text: #ffffff;
-        --alt-row: #f4f6f8;
-        --hover: #dfeaf7;
-        --badge-bg: #e8f5e9;
-        --badge-text: #1b5e20;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTN Uganda | Prepaid Data Bundles Comparison</title>
 
-      * {
-        box-sizing: border-box;
-      }
+  <style>
+    /* ---------- Page basics ---------- */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f4f4;
+      color: #222222;
+      margin: 0;
+      padding: 20px;
+    }
 
+    h1 {
+      text-align: center;
+      margin: 0 0 8px 0;
+    }
+
+    .intro {
+      text-align: center;
+      margin: 0 0 20px 0;
+      color: #555555;
+    }
+
+    /* ---------- Table container ---------- */
+    .table-wrapper {
+      width: 100%;
+    }
+
+    /* ---------- Table ---------- */
+    table {
+      border-collapse: collapse;          /* borders merge into single lines */
+      margin: 0 auto;                     /* centres the table on the page */
+      width: 100%;
+      max-width: 900px;
+      background-color: #ffffff;
+    }
+
+    caption {
+      caption-side: top;
+      font-size: 1.15em;
+      font-weight: bold;
+      padding: 12px;
+    }
+
+    th, td {
+      border: 1px solid #999999;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    thead th {
+      background-color: #ffcc00;          /* MTN yellow */
+      color: #000000;
+    }
+
+    /* Category cell spans its group of rows */
+    tbody th[scope="rowgroup"] {
+      background-color: #fff3b0;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: bold;
+    }
+
+    /* Alternating row shading */
+    tbody tr:nth-child(odd) {
+      background-color: #ffffff;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+
+    /* Hover highlight */
+    tbody tr:hover {
+      background-color: #ffe680;
+    }
+
+    /* Prices (header and cells) aligned to the right */
+    th.price,
+    td.price {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Best Value label */
+    .badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 8px;
+      background-color: #1b7f3b;
+      color: #ffffff;
+      font-size: 0.75em;
+      font-weight: bold;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
+    tfoot td {
+      background-color: #333333;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    tfoot td.total {
+      text-align: right;
+    }
+
+    .note {
+      max-width: 900px;
+      margin: 12px auto 0 auto;
+      font-size: 0.85em;
+      color: #555555;
+    }
+
+    /* ---------- Mobile: screens narrower than 600px ---------- */
+    @media (max-width: 599px) {
       body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: var(--bg);
-        color: #222;
+        padding: 10px;
       }
 
-      .page {
-        padding: 24px 16px 40px;
-      }
-
-      .table-wrap {
-        max-width: 1000px;
-        margin: 0 auto;
-        overflow-x: auto;
+      .table-wrapper {
+        overflow-x: auto;                       /* horizontal scrolling */
+        -webkit-overflow-scrolling: touch;
       }
 
       table {
-        width: 100%;
-        min-width: 760px;
-        border-collapse: collapse;
-        border: 2px solid var(--table-border);
-        background: #fff;
-        margin: 0 auto;
+        min-width: 620px;                       /* forces scroll instead of squashing */
       }
+    }
+  </style>
+</head>
 
-      caption {
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: #111;
-      }
+<body>
 
-      thead th {
-        background: var(--header-bg);
-        color: var(--header-text);
-        padding: 12px 10px;
-        text-align: left;
-        border: 1px solid var(--table-border);
-      }
+  <h1>MTN Uganda Prepaid Data Bundles</h1>
+  <p class="intro">Compare our daily, weekly and monthly bundles at a glance.</p>
 
-      tbody td,
-      tfoot td {
-        border: 1px solid var(--table-border);
-        padding: 10px 12px;
-      }
+  <div class="table-wrapper">
+    <table>
+      <caption>MTN Uganda Prepaid Internet Data Bundles by Validity Period (Prices in UGX)</caption>
 
-      tbody tr:nth-child(odd) {
-        background: var(--alt-row);
-      }
+      <thead>
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col">Bundle Name</th>
+          <th scope="col">Data Volume</th>
+          <th scope="col">Validity</th>
+          <th scope="col" class="price">Price (UGX)</th>
+          <th scope="col">USSD Code</th>
+        </tr>
+      </thead>
 
-      tbody tr:hover {
-        background: var(--hover);
-      }
+      <!--
+        HOW "BEST VALUE" WAS DECIDED
+        Best value = the lowest price per GB within each category
+        (price in UGX divided by data volume in GB; 1 GB = 1,000 MB).
+        Bundles in the same category have the same validity, so the
+        comparison is fair.
 
-      .price {
-        text-align: right;
-        font-weight: 700;
-      }
+        DAILY
+          Daily Lite  : 1,000 / 0.5 GB = 2,000 UGX per GB
+          Daily Plus  : 2,500 / 1.5 GB = 1,667 UGX per GB (approx.)
+          Daily Max   : 4,500 / 3 GB   = 1,500 UGX per GB  <-- lowest, Best Value
 
-      .best-value {
-        display: inline-block;
-        margin-left: 8px;
-        padding: 3px 8px;
-        border-radius: 12px;
-        background: var(--badge-bg);
-        color: var(--badge-text);
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
+        WEEKLY
+          Weekly Lite : 8,000  / 2 GB  = 4,000 UGX per GB
+          Weekly Plus : 15,000 / 5 GB  = 3,000 UGX per GB
+          Weekly Max  : 25,000 / 10 GB = 2,500 UGX per GB  <-- lowest, Best Value
 
-      tfoot td {
-        background: #eceff3;
-        font-weight: 700;
-        text-align: center;
-      }
+        MONTHLY
+          Monthly Lite: 30,000  / 10 GB = 3,000 UGX per GB
+          Monthly Plus: 60,000  / 25 GB = 2,400 UGX per GB
+          Monthly Max : 100,000 / 50 GB = 2,000 UGX per GB <-- lowest, Best Value
 
-      @media (max-width: 600px) {
-        .table-wrap {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-        }
+        Bundle names, prices and USSD codes are illustrative only.
+      -->
+      <tbody>
+        <!-- DAILY -->
+        <tr>
+          <th scope="rowgroup" rowspan="3">Daily</th>
+          <td>Daily Lite</td>
+          <td>500 MB</td>
+          <td>1 day</td>
+          <td class="price">1,000</td>
+          <td>*150*1#</td>
+        </tr>
+        <tr>
+          <td>Daily Plus</td>
+          <td>1.5 GB</td>
+          <td>1 day</td>
+          <td class="price">2,500</td>
+          <td>*150*2#</td>
+        </tr>
+        <tr>
+          <td>Daily Max <span class="badge">Best Value</span></td>
+          <td>3 GB</td>
+          <td>1 day</td>
+          <td class="price">4,500</td>
+          <td>*150*3#</td>
+        </tr>
 
-        table {
-          min-width: 760px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <div class="table-wrap">
-        <table>
-          <caption>MTN Uganda Prepaid Data Bundles Comparison</caption>
-          <thead>
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Bundle Name</th>
-              <th scope="col">Data Volume</th>
-              <th scope="col">Validity</th>
-              <th scope="col">Price (UGX)</th>
-              <th scope="col">USSD Code</th>
-            </tr>
-          </thead>
+        <!-- WEEKLY -->
+        <tr>
+          <th scope="rowgroup" rowspan="3">Weekly</th>
+          <td>Weekly Lite</td>
+          <td>2 GB</td>
+          <td>7 days</td>
+          <td class="price">8,000</td>
+          <td>*150*4#</td>
+        </tr>
+        <tr>
+          <td>Weekly Plus</td>
+          <td>5 GB</td>
+          <td>7 days</td>
+          <td class="price">15,000</td>
+          <td>*150*5#</td>
+        </tr>
+        <tr>
+          <td>Weekly Max <span class="badge">Best Value</span></td>
+          <td>10 GB</td>
+          <td>7 days</td>
+          <td class="price">25,000</td>
+          <td>*150*6#</td>
+        </tr>
 
-          <tbody>
-            <tr>
-              <td rowspan="2">Daily</td>
-              <td>Daily Lite <span class="best-value">Best Value</span></td>
-              <td>250 MB</td>
-              <td>1 Day</td>
-              <td class="price">1,000</td>
-              <td>*150*1#</td>
-            </tr>
-            <tr>
-              <td>Daily Plus</td>
-              <td>1 GB</td>
-              <td>1 Day</td>
-              <td class="price">4,000</td>
-              <td>*150*2#</td>
-            </tr>
+        <!-- MONTHLY -->
+        <tr>
+          <th scope="rowgroup" rowspan="3">Monthly</th>
+          <td>Monthly Lite</td>
+          <td>10 GB</td>
+          <td>30 days</td>
+          <td class="price">30,000</td>
+          <td>*150*7#</td>
+        </tr>
+        <tr>
+          <td>Monthly Plus</td>
+          <td>25 GB</td>
+          <td>30 days</td>
+          <td class="price">60,000</td>
+          <td>*150*8#</td>
+        </tr>
+        <tr>
+          <td>Monthly Max <span class="badge">Best Value</span></td>
+          <td>50 GB</td>
+          <td>30 days</td>
+          <td class="price">100,000</td>
+          <td>*150*9#</td>
+        </tr>
+      </tbody>
 
-            <tr>
-              <td rowspan="2">Weekly</td>
-              <td>Weekly Smart <span class="best-value">Best Value</span></td>
-              <td>3 GB</td>
-              <td>7 Days</td>
-              <td class="price">10,000</td>
-              <td>*150*3#</td>
-            </tr>
-            <tr>
-              <td>Weekly Max</td>
-              <td>7 GB</td>
-              <td>7 Days</td>
-              <td class="price">20,000</td>
-              <td>*150*4#</td>
-            </tr>
+      <tfoot>
+        <tr>
+          <td colspan="5">Total number of bundles listed</td>
+          <td class="total">9</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-            <tr>
-              <td rowspan="2">Monthly</td>
-              <td>Monthly Flex <span class="best-value">Best Value</span></td>
-              <td>10 GB</td>
-              <td>30 Days</td>
-              <td class="price">25,000</td>
-              <td>*150*5#</td>
-            </tr>
-            <tr>
-              <td>Monthly Ultra</td>
-              <td>15 GB</td>
-              <td>30 Days</td>
-              <td class="price">35,000</td>
-              <td>*150*6#</td>
-            </tr>
-          </tbody>
+  <p class="note">
+    Bundle names, prices and USSD codes are illustrative. "Best Value" marks the lowest price per GB in each category.
+  </p>
 
-          <tfoot>
-            <tr>
-              <td colspan="6">Total Bundles Listed: 6</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-
-    <!-- Best value was chosen by comparing the lowest price per GB within each validity group. Daily Lite is the best value because it gives the cheapest cost per GB for a 1-day bundle, Weekly Smart offers the lowest price per GB for 7-day bundles, and Monthly Flex is the most economical option among 30-day bundles. -->
-  </body>
+</body>
 </html>
 
